@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>BeaconWorks Ticket Dashboard</title>
+<style>
+  body { font-family: Calibri, Arial, sans-serif; background: #F7F5F0; color: #1F3A5F; margin: 2rem; }
+  h1 { color: #1F3A5F; }
+  table { width: 100%; border-collapse: collapse; background: white; }
+  th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #ddd; }
+  .high { color: #D9764A; font-weight: bold; }
+</style>
+</head>
+<body>
+  <h1>BeaconWorks Ticket Dashboard</h1>
+  <p>Course starter UI -- Sections 13-17. No status filter and no priority
+  column yet; both are added during the course (13.4 and 15.2).</p>
+  <table id="tickets"><thead>
+    <tr><th>Ticket</th><th>Customer</th><th>Subject</th><th>Category</th><th>Urgency</th><th>Status</th></tr>
+  </thead><tbody></tbody></table>
+  <script>
+    fetch("/api/tickets").then(r => r.json()).then(rows => {
+      const body = document.querySelector("#tickets tbody");
+      body.innerHTML = rows.map(t => `<tr>
+        <td>${t.ticket_id}</td><td>${t.customer_id}</td><td>${t.subject}</td>
+        <td>${t.category}</td><td class="${t.urgency}">${t.urgency}</td><td>${t.status}</td>
+      </tr>`).join("");
+    });
+  </script>
+</body>
+</html>
